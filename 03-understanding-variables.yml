@@ -17,3 +17,14 @@ stages:
       - bash: echo $(Build.SourcesDirectory)
       - bash: ls -R $(System.DefaultWorkingDirectory)
       - bash: echo $(Build.ArtifactStagingDirectory)
+      - bash: ls -R $(Build.ArtifactStagingDirectory)
+      
+      # Copy Files from Workdir to Targetdir
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: |
+            **/*.yaml
+            **/*.tf
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - bash: ls -R $(Build.ArtifactStagingDirectory)
